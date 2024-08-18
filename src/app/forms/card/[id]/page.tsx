@@ -66,7 +66,8 @@ export default function AdCard(context: any) {
         //   document.getElementById('uploader').files[0]
       );
       // get the url of the uploaded image
-      const imageId = response["$id"];
+      const imageId = response.$id;
+
       window.Telegram.WebApp.openTelegramLink(
         `https://t.me/Formfortelegrambot?start=${id + "_" + imageId}`
       );
@@ -113,7 +114,7 @@ export default function AdCard(context: any) {
     );
   }
 
-  if (usersForms.length === 0) {
+  if (usersForms.length === 0 || !openedForm) {
     return (
       <div>
         <p>Loading...</p>
