@@ -180,13 +180,22 @@ export default function Fill(context: any) {
       })
     );
   }
-
+  function extractTelegramId() {
+    const unextracted = window.Telegram.WebApp.initData;
+    const extracted = decodeURIComponent(unextracted);
+    // console.log(extracted)
+    const telegram_id: number = JSON.parse(
+      extracted.split("&")[0].split("=")[1]
+    ).id;
+    // console.log(telegram_id)
+    return telegram_id.toString();
+  }
   const getForm = async () => {
     // check if user has already filled the form
     // try to fetch the response
     database
       .listDocuments("66a0bb690022ca66f9c3", "66a0c535000c3f4e13ae", [
-        Query.equal("profiles", telegramId),
+        Query.equal("profiles", extractTelegramId()),
         Query.equal("form", id),
       ])
       .then((response) => {
