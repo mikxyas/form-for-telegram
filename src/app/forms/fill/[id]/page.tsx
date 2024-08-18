@@ -266,13 +266,7 @@ export default function Fill(context: any) {
   }
   if (loading) {
     return (
-      <div
-        style={{
-          background: window.Telegram.WebApp.themeParams.bg_color,
-          color: window.Telegram.WebApp.themeParams.text_color,
-        }}
-        className="h-screen flex bg-transparent items-center justify-center"
-      >
+      <div className="h-screen flex bg-transparent items-center justify-center">
         <p>...fetching</p>
       </div>
     );
@@ -307,7 +301,7 @@ export default function Fill(context: any) {
               <CardHeader>
                 <CardTitle>{form.title}</CardTitle>
               </CardHeader>
-              <CardContent className="pb-0">
+              <CardContent className={`${form.is_required ? "pb-0" : "pb-3"}`}>
                 {form.type == "short-answer" && (
                   <div className="px-3">
                     <Input
