@@ -1,24 +1,6 @@
 "use client";
 import { useStore } from "@/zustand/store";
 import React, { useEffect } from "react";
-import Text from "./Text";
-import Link from "next/link";
-import Button from "./Button";
-import { useRouter } from "next/navigation";
-import Image from "next/image";
-import {
-  Box,
-  ChevronRight,
-  ChevronsLeftRight,
-  Copy,
-  Edit,
-  Edit2,
-  Edit2Icon,
-  Edit3,
-  NotebookPen,
-} from "lucide-react";
-import { database } from "@/utils/appwrite/Appwrite";
-import { useToast } from "./ui/use-toast";
 import FormCard from "./FormCard";
 // import FormCard from './FormCard'
 
