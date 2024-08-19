@@ -40,9 +40,12 @@ export default function Fill(context: any) {
   const [formIsClosed, setFormIsClosed] = useState(false);
   const [modifyResponse, setModifyResponse] = useState(false);
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const { scriptLoaded, telegramId } = useStore((state) => state);
 
   const updateResponse = async () => {
+    setIsSubmitting(true);
     await database
       .updateDocument(
         "66a0bb690022ca66f9c3",
@@ -57,13 +60,17 @@ export default function Fill(context: any) {
           title: "Response Updated",
         });
         setModifyResponse(false);
+        setIsSubmitting(false);
       })
       .catch((e) => {
+        setIsSubmitting(false);
+
         console.log(e);
       });
   };
 
   const submitForm = async () => {
+    setIsSubmitting(true);
     await database
       .createDocument(
         "66a0bb690022ca66f9c3",
@@ -77,12 +84,18 @@ export default function Fill(context: any) {
       )
       .then((response) => {
         setFormAlreadyFilled(true);
+        setIsSubmitting(false);
+
         setResponse(response);
         // console.log(response)
         toast({
           title: "Response Sumbitted",
         });
         setForm(JSON.parse(response.structure));
+      })
+      .catch((e) => {
+        console.log(e);
+        setIsSubmitting(false);
       });
   };
 
@@ -355,7 +368,7 @@ export default function Fill(context: any) {
       <div className="mb-5 mt-5 px-5">
         {modifyResponse ? (
           <Button
-            disabled={!checkRequiredFields()}
+            disabled={!checkRequiredFields() || isSubmitting}
             className="w-full"
             onClick={() => updateResponse()}
           >
@@ -363,7 +376,7 @@ export default function Fill(context: any) {
           </Button>
         ) : (
           <Button
-            disabled={!checkRequiredFields()}
+            disabled={!checkRequiredFields() || isSubmitting}
             className="w-full"
             onClick={() => submitForm()}
           >
